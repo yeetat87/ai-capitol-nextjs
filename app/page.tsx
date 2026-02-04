@@ -655,7 +655,7 @@ export default function Home() {
       {/* Footer */}
       <footer>
         <div className="container">
-          <div className="footer-grid">
+          <div className="footer-grid animate-on-scroll fade-in">
             <div className="footer-brand">
               <div className="logo">
                 <span className="logo-text">The AI Capitol</span>
@@ -690,7 +690,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="footer-bottom">
+          <div className="footer-bottom animate-on-scroll fade-in delay-1">
             <p>&copy; 2026 The AI Capitol. All rights reserved.</p>
             <div className="footer-social">
               <a href="#">𝕏</a>
