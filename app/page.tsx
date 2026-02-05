@@ -1,170 +1,171 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FormEvent } from "react";
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [email, setEmail] = useState("");
-    const [status, setStatus] = useState<
-      "idle" | "loading" | "success" | "error"
-    >("idle");
-    const [message, setMessage] = useState("");
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Page load animation
-    document.body.classList.add('loaded')
+    document.body.classList.add("loaded");
 
     // Scroll events
     const handleScroll = () => {
-      const navbar = document.getElementById('navbar')
-      const scrollTop = document.getElementById('scrollTop')
+      const navbar = document.getElementById("navbar");
+      const scrollTop = document.getElementById("scrollTop");
 
       if (window.scrollY > 50) {
-        navbar?.classList.add('scrolled')
+        navbar?.classList.add("scrolled");
       } else {
-        navbar?.classList.remove('scrolled')
+        navbar?.classList.remove("scrolled");
       }
 
       if (window.scrollY > 500) {
-        scrollTop?.classList.add('visible')
+        scrollTop?.classList.add("visible");
       } else {
-        scrollTop?.classList.remove('visible')
+        scrollTop?.classList.remove("visible");
       }
 
       // Parallax effect
-      const heroBg = document.querySelector('.hero-bg-elements') as HTMLElement
+      const heroBg = document.querySelector(".hero-bg-elements") as HTMLElement;
       if (heroBg && window.scrollY < 800) {
-        heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`
+        heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
       }
-    }
+    };
 
     // Intersection Observer for animations
     const observerOptions = {
       root: null,
-      rootMargin: '-30px 0px -30px 0px',
-      threshold: [0, 0.1, 0.2]
-    }
+      rootMargin: "-30px 0px -30px 0px",
+      threshold: [0, 0.1, 0.2],
+    };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
           requestAnimationFrame(() => {
-            entry.target.classList.add('visible')
-          })
+            entry.target.classList.add("visible");
+          });
 
           // Animate counters
-          const counters = entry.target.querySelectorAll('[data-count]')
-          counters.forEach(counter => animateCounter(counter as HTMLElement))
+          const counters = entry.target.querySelectorAll("[data-count]");
+          counters.forEach((counter) => animateCounter(counter as HTMLElement));
 
-          observer.unobserve(entry.target)
+          observer.unobserve(entry.target);
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el)
-    })
+    document.querySelectorAll(".animate-on-scroll").forEach((el) => {
+      observer.observe(el);
+    });
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      observer.disconnect()
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, []);
 
   const animateCounter = (el: HTMLElement) => {
-    if (el.classList.contains('counted')) return
-    el.classList.add('counted')
+    if (el.classList.contains("counted")) return;
+    el.classList.add("counted");
 
-    const target = parseInt(el.getAttribute('data-count') || '0')
-    const suffix = el.getAttribute('data-suffix') || ''
-    const prefix = el.getAttribute('data-prefix') || ''
-    const duration = 2000
-    const step = target / (duration / 16)
-    let current = 0
+    const target = parseInt(el.getAttribute("data-count") || "0");
+    const suffix = el.getAttribute("data-suffix") || "";
+    const prefix = el.getAttribute("data-prefix") || "";
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
 
     const updateCounter = () => {
-      current += step
+      current += step;
       if (current < target) {
-        el.textContent = prefix + Math.floor(current) + suffix
-        requestAnimationFrame(updateCounter)
+        el.textContent = prefix + Math.floor(current) + suffix;
+        requestAnimationFrame(updateCounter);
       } else {
-        el.textContent = prefix + target + suffix
+        el.textContent = prefix + target + suffix;
       }
-    }
-    updateCounter()
-  }
+    };
+    updateCounter();
+  };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const toggleFaq = (button: HTMLButtonElement) => {
-    const faqItem = button.closest('.faq-item')
-    const isActive = faqItem?.classList.contains('active')
+    const faqItem = button.closest(".faq-item");
+    const isActive = faqItem?.classList.contains("active");
 
-    document.querySelectorAll('.faq-item.active').forEach(item => {
-      item.classList.remove('active')
-    })
+    document.querySelectorAll(".faq-item.active").forEach((item) => {
+      item.classList.remove("active");
+    });
 
     if (!isActive) {
-      faqItem?.classList.add('active')
+      faqItem?.classList.add("active");
     }
-  }
+  };
 
-   const handleEmailSignup = async (e: FormEvent) => {
-     e.preventDefault();
-     setStatus("loading");
+  const handleEmailSignup = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
 
-     try {
-       const formData = new FormData();
-       formData.append("email_address", email);
+    try {
+      const formData = new FormData();
+      formData.append("email_address", email);
 
-       const response = await fetch(
-         "https://app.convertkit.com/forms/9049771/subscriptions",
-         {
-           method: "POST",
-           body: formData,
-           headers: {
-             Accept: "application/json",
-           },
-         }
-       );
+      const response = await fetch(
+        "https://app.convertkit.com/forms/9049771/subscriptions",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
 
-       if (response.ok) {
-         setStatus("success");
-         setMessage("Thanks for joining! Check your inbox.");
-         setEmail("");
-         setTimeout(() => {
-           setStatus("idle");
-           setMessage("");
-         }, 5000);
-       } else {
-         setStatus("error");
-         setMessage("Something went wrong. Please try again.");
-       }
-     } catch (error) {
-       setStatus("error");
-       setMessage("Something went wrong. Please try again.");
-     }
-   };
+      if (response.ok) {
+        setStatus("success");
+        setMessage("Thanks for joining! Check your inbox.");
+        setEmail("");
+        setTimeout(() => {
+          setStatus("idle");
+          setMessage("");
+        }, 5000);
+      } else {
+        setStatus("error");
+        setMessage("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
+    }
+  };
 
   const handleHeroSignup = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const form = event.currentTarget
-    const email = (form.querySelector('.hero-email-input') as HTMLInputElement).value
+    event.preventDefault();
+    const form = event.currentTarget;
+    const email = (form.querySelector(".hero-email-input") as HTMLInputElement)
+      .value;
 
     // You can replace this with your actual form submission logic
-    console.log('Hero email submitted:', email)
+    console.log("Hero email submitted:", email);
 
     // Show success message
-    const capture = form.closest('.hero-lead-capture') as HTMLElement
+    const capture = form.closest(".hero-lead-capture") as HTMLElement;
     if (capture) {
-      capture.innerHTML = '<div class="hero-signup-success"><div class="success-icon">🎉</div><h4>You\'re In!</h4><p>Check your inbox for your consultation booking link. We can\'t wait to help you automate!</p></div>'
+      capture.innerHTML =
+        '<div class="hero-signup-success"><div class="success-icon">🎉</div><h4>You\'re In!</h4><p>Check your inbox for your consultation booking link. We can\'t wait to help you automate!</p></div>';
     }
-  }
+  };
 
   return (
     <>
@@ -409,12 +410,7 @@ export default function Home() {
                   <strong>These are fixable.</strong> Take 3 minutes to find out
                   how much you could save.
                 </p>
-                <a
-                  href="https://form.typeform.com/to/f9AQSbx6"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-cta-glow btn-lg"
-                >
+                <a href="#scorecard" className="btn btn-cta-glow btn-lg">
                   Get Your Free Assessment →
                 </a>
               </div>
@@ -909,49 +905,39 @@ export default function Home() {
                 exclusive insights.
               </p>
               <form className="email-signup-form" onSubmit={handleEmailSignup}>
-                {status === "success" ? (
-                  <div className="signup-success">
-                    <span>✓</span> {message}
+                <div className="email-input-wrap">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="email-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-cta-glow"
+                    disabled={status === "loading"}
+                  >
+                    {status === "loading" ? "Joining..." : "Join Us Now →"}
+                  </button>
+                </div>
+                {message && (
+                  <div
+                    className={`signup-message ${status}`}
+                    style={{ marginTop: "12px", textAlign: "center" }}
+                  >
+                    {message}
                   </div>
-                ) : (
-                  <>
-                    <div className="email-input-wrap">
-                      <input
-                        type="email"
-                        placeholder="Enter your email address"
-                        className="email-input"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        disabled={status === "loading"}
-                      />
-                      <button
-                        type="submit"
-                        className="btn btn-cta-glow"
-                        disabled={status === "loading"}
-                      >
-                        {status === "loading" ? "Joining..." : "Join Us Now →"}
-                      </button>
-                    </div>
-                    {status === "error" && (
-                      <p
-                        style={{
-                          color: "#ef4444",
-                          marginTop: "12px",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {message}
-                      </p>
-                    )}
-                  </>
                 )}
               </form>
-              <div className="cta-points">
-                <span>✓ Free insights</span>
-                <span>✓ No spam</span>
-                <span>✓ Unsubscribe anytime</span>
-              </div>
+              {status !== "success" && (
+                <div className="cta-points">
+                  <span>✓ Free insights</span>
+                  <span>✓ No spam</span>
+                  <span>✓ Unsubscribe anytime</span>
+                </div>
+              )}
             </div>
           </div>
         </section>
