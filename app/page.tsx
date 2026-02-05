@@ -222,7 +222,9 @@ export default function Home() {
           How It Works
         </a>
         <a
-          href="#scorecard"
+          href="https://form.typeform.com/to/f9AQSbx6"
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={() => setMobileMenuOpen(false)}
           className="btn btn-primary"
           style={{ marginTop: "16px", textAlign: "center" }}
@@ -410,7 +412,12 @@ export default function Home() {
                   <strong>These are fixable.</strong> Take 3 minutes to find out
                   how much you could save.
                 </p>
-                <a href="#scorecard" className="btn btn-cta-glow btn-lg">
+                <a
+                  href="https://form.typeform.com/to/f9AQSbx6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-cta-glow btn-lg"
+                >
                   Get Your Free Assessment →
                 </a>
               </div>
@@ -437,7 +444,12 @@ export default function Home() {
                   <li>Receive a custom action plan</li>
                 </ul>
                 <div className="scorecard-cta-wrap">
-                  <a href="#" className="btn btn-cta-glow btn-lg">
+                  <a
+                    href="https://form.typeform.com/to/f9AQSbx6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-cta-glow btn-lg"
+                  >
                     Start Free Assessment →
                   </a>
                   <div className="cta-reassurance">
@@ -755,7 +767,12 @@ export default function Home() {
             </div>
 
             <div className="process-cta animate-on-scroll">
-              <a href="#scorecard" className="btn btn-primary btn-lg">
+              <a
+                href="https://form.typeform.com/to/f9AQSbx6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-lg"
+              >
                 Start With a Free Assessment →
               </a>
             </div>
