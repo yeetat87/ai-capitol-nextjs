@@ -52,4 +52,3 @@ This will create a static export in the `out` directory that can be deployed to 
 ├── package.json       # Dependencies
 └── tsconfig.json      # TypeScript config
 ```
-# ai-capitol-nextjs

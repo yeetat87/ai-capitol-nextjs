@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState, FormEvent } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)  
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
+
 
   useEffect(() => {
     // Page load animation
@@ -148,6 +149,21 @@ export default function Home() {
     }
   }
 
+  const handleHeroSignup = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const email = (form.querySelector('.hero-email-input') as HTMLInputElement).value
+
+    // You can replace this with your actual form submission logic
+    console.log('Hero email submitted:', email)
+
+    // Show success message
+    const capture = form.closest('.hero-lead-capture') as HTMLElement
+    if (capture) {
+      capture.innerHTML = '<div class="hero-signup-success"><div class="success-icon">🎉</div><h4>You\'re In!</h4><p>Check your inbox for your consultation booking link. We can\'t wait to help you automate!</p></div>'
+    }
+  }
+
   return (
     <>
       {/* Navigation */}
@@ -174,7 +190,7 @@ export default function Home() {
         <a href="#showcase" onClick={() => setMobileMenuOpen(false)}>Use Cases</a>
         <a href="#scorecard" onClick={() => setMobileMenuOpen(false)}>Assessment</a>
         <a href="#process" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-        <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="btn btn-primary" style={{ marginTop: '16px', textAlign: 'center' }}>Free Assessment →</a>
+       <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="btn btn-primary" style={{ marginTop: '16px', textAlign: 'center' }}>Free Assessment →</a>
       </div>
 
       <div id="page-home" className="page active">
@@ -283,7 +299,7 @@ export default function Home() {
               </div>
               <div className="pain-cta-section">
                 <p className="pain-cta-text"><strong>These are fixable.</strong> Take 3 minutes to find out how much you could save.</p>
-                <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer" className="btn btn-cta-glow btn-lg">Get Your Free Assessment →</a>
+                  <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer"  className="btn btn-cta-glow btn-lg">Get Your Free Assessment →</a>
               </div>
             </div>
           </div>
@@ -305,7 +321,7 @@ export default function Home() {
                   <li>Receive a custom action plan</li>
                 </ul>
                 <div className="scorecard-cta-wrap">
-                  <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer" className="btn btn-cta-glow btn-lg">Start Free Assessment →</a>
+                 <a href="https://form.typeform.com/to/f9AQSbx6" target="_blank" rel="noopener noreferrer" className="btn btn-cta-glow btn-lg">Start Free Assessment →</a>
                   <div className="cta-reassurance">
                     <span>✓ No credit card</span>
                     <span>✓ No sales call</span>
@@ -619,7 +635,7 @@ export default function Home() {
             <div className="cta-block animate-on-scroll pop">
               <h2>Ready to Automate?</h2>
               <p>Join our community and get automation tips, case studies, and exclusive insights.</p>
-              <form className="email-signup-form" onSubmit={handleEmailSignup}>
+            <form className="email-signup-form" onSubmit={handleEmailSignup}>
                 {status === 'success' ? (
                   <div className="signup-success"><span>✓</span> {message}</div>
                 ) : (
@@ -655,7 +671,7 @@ export default function Home() {
       {/* Footer */}
       <footer>
         <div className="container">
-          <div className="footer-grid animate-on-scroll fade-in">
+          <div className="footer-grid">
             <div className="footer-brand">
               <div className="logo">
                 <span className="logo-text">The AI Capitol</span>
@@ -690,7 +706,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="footer-bottom animate-on-scroll fade-in delay-1">
+         <div className="footer-bottom animate-on-scroll fade-in delay-1">
             <p>&copy; 2026 The AI Capitol. All rights reserved.</p>
             <div className="footer-social">
               <a href="#">𝕏</a>
