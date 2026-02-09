@@ -892,6 +892,7 @@ nav.scrolled {
     border-radius: 20px;
     padding: 12px;
     gap: 12px;
+    align-items: center;
   }
   .hero-input-wrap .btn {
     width: 100%;
